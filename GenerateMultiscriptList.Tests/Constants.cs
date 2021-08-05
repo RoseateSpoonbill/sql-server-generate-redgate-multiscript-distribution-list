@@ -6,13 +6,6 @@ namespace GenerateMultiscriptList.Tests
 {
     internal class Constants
     {
-        #region Useful Constants
-
-        internal const int PrecisionBeCloseTo = 6000; // 6 seconds in milliseconds
-
-        #endregion
-
-        #region RedgateMultiScript
 
         public static string[] MultiScript_NodeTypeList = { "CNAME", "All" };
         public static string[] MultiScript_AuthTypeList = { "Windows", "SQL" };
@@ -40,10 +33,8 @@ namespace GenerateMultiscriptList.Tests
         public static string[] DOnly = { "d" };
         public static string[] DbaOnly = { "DBA" };
         public static string[] NullStringOnly = { null };
-        public static string[] POnly = { "P" };
         public static string[] SqlOnly = { "SQL" };
         public static string[] WindowsOnly = { "Windows" };
 
-        #endregion
     }
 }
