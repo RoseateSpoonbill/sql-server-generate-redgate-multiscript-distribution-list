@@ -26,9 +26,6 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         }
 
         // --------------------------------------------------------------------------------------------------------------
-        public static string[] sqlUserNamesList = { "DeployUser", "" };
-
-        // --------------------------------------------------------------------------------------------------------------
         [Fact]
         [Trait("Category", "UnitTest")]
         public void ShouldReturn_AllDatabaseTypes()
@@ -39,7 +36,7 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
             SqlConnection sqlConnection = fixture.DbConnection;
 
-            List<string> expectedResults = GenericConstants.Database_Types.AsList<string>();
+            List<string> expectedResults = Constants.Database_Types.AsList<string>();
 
             using (SqlTransaction transaction = sqlConnection.BeginTransaction())
             {
@@ -72,7 +69,7 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
             SqlConnection sqlConnection = fixture.DbConnection;
 
-            List<string> expectedResults = GenericConstants.Environment_Codes.AsList<string>();
+            List<string> expectedResults = Constants.Environment_Codes.AsList<string>();
 
             using (SqlTransaction transaction = sqlConnection.BeginTransaction())
             {
@@ -138,7 +135,7 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
             SqlConnection sqlConnection = fixture.DbConnection;
 
-            List<string> expectedResults = sqlUserNamesList.AsList<string>();
+            List<string> expectedResults = sqlUserList.AsList<string>();
             expectedResults.Add(null);
 
             using (SqlTransaction transaction = sqlConnection.BeginTransaction())
@@ -420,7 +417,7 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix2TheoryData<string, string> Parameters_ShouldReturn_AtLeast1Result_WhereEnvironmentIsX_AndDatabaseTypeIsY
-            = new XUnitExtension.Matrix2TheoryData<string, string>(GenericConstants.Environment_Codes, GenericConstants.Database_Types);
+            = new XUnitExtension.Matrix2TheoryData<string, string>(Constants.Environment_Codes, Constants.Database_Types);
 
         [Theory]
         [MemberData(nameof(Parameters_ShouldReturn_AtLeast1Result_WhereEnvironmentIsX_AndDatabaseTypeIsY))]
@@ -461,28 +458,17 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
             }
         }
 
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_AllNodeTypes_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_EnvironmentCodeList_ExceptDev, GenericConstants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly, Constants.AllOnly);
+        public static string[] sqlUserList = { "DeployUser", "" };
 
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_AllNodeTypes_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_EnvironmentCodeList_ExceptDev, GenericConstants.Database_Types, Constants.SqlOnly, sqlUserNamesList, Constants.AllOnly);
+        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_Windows
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.Environment_Codes, Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly, Constants.MultiScript_NodeTypeList);
 
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_DBA_SQL
-           = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.DOnly, Constants.DbaOnly, Constants.SqlOnly, sqlUserNamesList, Constants.AllOnly);
-
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_AnyAuth_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(GenericConstants.Environment_Codes, Constants.MultiScript_DatabaseTypeList_ExceptDBA, Constants.WindowsOnly, Constants.NullStringOnly, Constants.CNameOnly);
-
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_AnyAuth_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(GenericConstants.Environment_Codes, Constants.MultiScript_DatabaseTypeList_ExceptDBA, Constants.SqlOnly, sqlUserNamesList, Constants.CNameOnly);
+        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_1Result_SQL
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.Environment_Codes, Constants.Database_Types, Constants.SqlOnly, sqlUserList, Constants.MultiScript_NodeTypeList);
 
         [Theory]
-        [MemberData(nameof(Parameters_ShouldReturn_1Result_AllNodeTypes_Windows))]
-        [MemberData(nameof(Parameters_ShouldReturn_1Result_AllNodeTypes_SQL))]
-        [InlineData("D", "DBA", "Windows", null, "All")]
-        [MemberData(nameof(Parameters_ShouldReturn_1Result_DBA_SQL))]
-        [MemberData(nameof(Parameters_ShouldReturn_1Result_AnyAuth_Windows))]
-        [MemberData(nameof(Parameters_ShouldReturn_1Result_AnyAuth_SQL))]
+        [MemberData(nameof(Parameters_ShouldReturn_1Result_Windows))]
+        [MemberData(nameof(Parameters_ShouldReturn_1Result_SQL))]
         [Trait("Category", "UnitTest")]
         public void ShouldReturn_1Result_WhereEnvironmentIsA_AndDatabaseTypeIsB_AndAuthTypeIsC_AndNodeTypeIsD(string environmentCode, string databaseType,
             string authType, string sqlUserName, string nodeType)
@@ -531,23 +517,17 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
             }
         }
 
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_DBA_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(GenericConstants.Environment_Codes, Constants.DbaOnly, Constants.WindowsOnly, Constants.NullStringOnly, Constants.CNameOnly);
+        /*
+        // uncomment this code and update the Matrices if you have a use case where a DBType will NOT have databases/groups in 1+ cases
+        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_Windows
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.Environment_Codes, Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly, Constants.MultiScript_NodeTypeList);
 
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_DBA_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(GenericConstants.Environment_Codes, Constants.DbaOnly, Constants.SqlOnly, sqlUserNamesList, Constants.CNameOnly);
-
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_AllNodeTypes_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.DOnly, Constants.MultiScript_DatabaseTypeList_ExceptDBA, Constants.WindowsOnly, Constants.NullStringOnly, Constants.AllOnly);
-
-        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_AllNodeTypes_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.DOnly, Constants.MultiScript_DatabaseTypeList_ExceptDBA, Constants.SqlOnly, sqlUserNamesList, Constants.AllOnly);
+        public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldReturn_0Results_SQL
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.Environment_Codes, Constants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList, Constants.MultiScript_NodeTypeList);
 
         [Theory]
-        [MemberData(nameof(Parameters_ShouldReturn_0Results_DBA_Windows))]
-        [MemberData(nameof(Parameters_ShouldReturn_0Results_DBA_SQL))]
-        [MemberData(nameof(Parameters_ShouldReturn_0Results_AllNodeTypes_Windows))]
-        [MemberData(nameof(Parameters_ShouldReturn_0Results_AllNodeTypes_SQL))]
+        [MemberData(nameof(Parameters_ShouldReturn_0Results_Windows))]
+        [MemberData(nameof(Parameters_ShouldReturn_0Results_SQL))]
         [Trait("Category", "UnitTest")]
         public void ShouldReturn_0Results_WhereEnvironmentIsA_AndDatabaseTypeIsB_AndAuthTypeIsC_AndNodeTypeIsD(string environmentCode, string databaseType,
             string authType, string sqlUserName, string nodeType)
@@ -598,10 +578,12 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
             }
         }
 
+        */
+
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix1TheoryData<string> Parameters_ShouldReturn_AtLeast1Result_ForEachEnvironment
-            = new XUnitExtension.Matrix1TheoryData<string>(GenericConstants.Environment_Codes);
+            = new XUnitExtension.Matrix1TheoryData<string>(Constants.Environment_Codes);
 
         [Theory]
         [MemberData(nameof(Parameters_ShouldReturn_AtLeast1Result_ForEachEnvironment))]

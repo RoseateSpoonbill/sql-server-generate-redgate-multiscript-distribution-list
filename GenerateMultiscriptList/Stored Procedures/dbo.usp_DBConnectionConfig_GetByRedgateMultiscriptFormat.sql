@@ -5,17 +5,15 @@ Description	:	Return all instances formatted in RedGate Multiscript's Database L
 
 Parameters
 	-- determine what groups & databases to output
-		@Domain							:	com
-		@EnvironmentCode				:	If you only want results for an environment
-											Valid values: null, D, T, S, P
-		@DatabaseType					:	If you only want results for a specific DB type
-											Valid values: null, A, AL, B, C, D, E, GA, I, R, SSISDB, V
+		@Domain				:	What is the domain you want to generate lists for?
+		@EnvironmentCode	:	If you only want results for an environment, put its single digit code.  Otherwise don't pass it in
+		@DatabaseType		:	If you only want results for a specific DB type.  Otherwise don't pass it in
 
 	-- determines database authentication that will be set up
-		@AuthType						:	What kind of authentication will the DB connections use?
-											Windows = Windows Authentication
-											SQL	= SQL Server Authentication
-		@SQLUserName					: If @AuthType = SQL, what user will this be for?
+		@AuthType		:	What kind of authentication will the DB connections use?
+								Windows = Windows Authentication
+								SQL	= SQL Server Authentication
+		@SQLUserName	: If @AuthType = SQL, what user will this be for?
 
 	-- determines what will be returned/output
 		@OutputListOfGroupNames			:	Do you want a list of all the Groups that output was generated for, to compare the output against?
@@ -23,7 +21,7 @@ Parameters
 		@TestRun						:	Are you running this for a unit/automation test?
 
 Notes
-	Finding the correct value for the @*_DeployUser_SQLEncryptedPassword parameters:
+	Finding the correct value for the @*_SQLEncryptedPassword parameters:
 		1. Open Multiscript	
 		2. If you do NOT have any lists already set up using DeployUser credentials in each environment:
 				a. Create a new throwaway distribution list (i.e. don't conflict with the group names in dbo.View_RedgateMultiScriptDatabaseGroups)
@@ -44,7 +42,7 @@ Notes
 
 CREATE PROCEDURE dbo.usp_DBConnectionConfig_GetByRedgateMultiscriptFormat
 
-	@Domain								VARCHAR(16)		= 'com'
+	@Domain								VARCHAR(16)
 	, @EnvironmentCode					VARCHAR(1)		= NULL
 	, @DatabaseType						VARCHAR(32)		= NULL
 	, @AuthType							VARCHAR(32)		= 'Windows'
@@ -253,17 +251,7 @@ BEGIN TRY
 						)
 				, '$$DatabaseName$$', DatabaseName), '$$Suffix$$', Suffix), '$$Port$$', PortNumber)
 				, '$$SQLEncryptedPassword$$'
-				, CASE
-					WHEN @AuthType = 'Windows' THEN ''
-					ELSE
-						CASE EnvironmentCode
-							WHEN 'D' THEN '$$Test_SQLEncryptedPassword$$'
-							WHEN 'T' THEN '$$Test_SQLEncryptedPassword$$'
-							WHEN 'S' THEN '$$Stage_SQLEncryptedPassword$$'
-							WHEN 'P' THEN '$$Prod_SQLEncryptedPassword$$'
-							ELSE '??'
-						END
-					END
+				, IIF(@AuthType = 'Windows', '', CONCAT('$$', EnvironmentCode, '_SQLEncryptedPassword$$'))
 				);
 
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -526,7 +514,7 @@ SQL Multi Script
 
 		IF (@AuthType <> 'WindowsAuth')
 		BEGIN
-			SET @OutputMessage = 'Remember to replace these values in the XMLCode in the file with the correct encrypted passwords for the user and environment: $$Test_SQLEncryptedPassword$$, $$Stage_SQLEncryptedPassword$$, $$Prod_SQLEncryptedPassword$$';
+			SET @OutputMessage = 'Remember to replace the "$$?_SQLEncryptedPassword$$" values in the XMLCode in the file with the correct encrypted passwords for the user and environment';
 			RAISERROR(@OutputMessage, 10, 1);
 		END
 

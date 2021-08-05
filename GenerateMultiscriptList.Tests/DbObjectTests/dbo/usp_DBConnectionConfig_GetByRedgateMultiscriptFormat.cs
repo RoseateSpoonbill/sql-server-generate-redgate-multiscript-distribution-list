@@ -28,12 +28,10 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         public static string[] domainList_Valid = { "com" };
 
         public static XUnitExtension.Matrix3TheoryData<string, string, string> Parameters_Windows
-            = new XUnitExtension.Matrix3TheoryData<string, string, string>(domainList_Valid, 
-                Constants.WindowsOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix3TheoryData<string, string, string>(domainList_Valid, Constants.WindowsOnly, Constants.NullStringOnly);
 
         public static XUnitExtension.Matrix3TheoryData<string, string, string> Parameters_SQL
-            = new XUnitExtension.Matrix3TheoryData<string, string, string>(domainList_Valid, 
-                Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix3TheoryData<string, string, string>(domainList_Valid, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         // --------------------------------------------------------------------------------------------------------------
 

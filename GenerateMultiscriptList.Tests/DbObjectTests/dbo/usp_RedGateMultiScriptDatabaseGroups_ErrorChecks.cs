@@ -27,15 +27,13 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
         // --------------------------------------------------------------------------------------------------------------
 
-        public static string[] domainList_Invalid = { null, "com" };
-
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_DomainIsInvalid_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(domainList_Invalid, GenericConstants.Environment_Codes, 
-                GenericConstants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(genericInvalidStringsList, Constants.Environment_Codes, 
+                Constants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_DomainIsInvalid_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(domainList_Invalid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(genericInvalidStringsList, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_DomainIsInvalid_Windows))]
@@ -82,11 +80,11 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_EnvironmentCodeIsInvalid_Windows
             = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, genericInvalidStringsList_ExcludeNull,
-                GenericConstants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+                Constants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_EnvironmentCodeIsInvalid_SQL
             = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, genericInvalidStringsList_ExcludeNull,
-                GenericConstants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
+                Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_EnvironmentCodeIsInvalid_Windows))]
@@ -131,15 +129,13 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
         // --------------------------------------------------------------------------------------------------------------
 
-        public static string[] databaseTypeList_Invalid = { "Documentation", "Sales" };
-
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_DatabaseTypeIsInvalid_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                databaseTypeList_Invalid, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                genericInvalidStringsList_ExcludeNull, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_DatabaseTypeIsInvalid_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                databaseTypeList_Invalid, Constants.WindowsOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                genericInvalidStringsList_ExcludeNull, Constants.WindowsOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_DatabaseTypeIsInvalid_Windows))]
@@ -185,8 +181,8 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_AuthTypeIsInvalid
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, genericInvalidStringsList, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, genericInvalidStringsList, Constants.MultiScript_SqlUserNamesList);
 
         [Theory]
         [MemberData(nameof(Parameters_AuthTypeIsInvalid))]
@@ -231,8 +227,8 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_SqlUserNameIsInvalid_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.WindowsOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.WindowsOnly, Constants.MultiScript_SqlUserNamesList);
 
         [Theory]
         [MemberData(nameof(Parameters_SqlUserNameIsInvalid_Windows))]
@@ -276,8 +272,8 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
 
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_SqlUserNameIsInvalid_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.SqlOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.SqlOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_SqlUserNameIsInvalid_SQL))]
@@ -322,12 +318,12 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldNotThrow_Exception_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldNotThrow_Exception_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_ShouldNotThrow_Exception_Windows))]

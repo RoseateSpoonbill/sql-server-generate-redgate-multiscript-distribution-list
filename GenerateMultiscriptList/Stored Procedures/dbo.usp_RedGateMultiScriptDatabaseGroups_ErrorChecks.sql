@@ -3,10 +3,8 @@ Description	:	Check RedGate Multiscript parameters for errors
 
 Parameters
 		@Domain				:	com
-		@EnvironmentCode	:	If you only want results for an environment
-								Valid values: null, D, T, S, P
-		@DatabaseType		:	If you only want results for a specific DB type
-								Valid values: null, A, AL, B, C, DBA, E, GA, I, R, SSISDB, V
+		@EnvironmentCode	:	If you only want results for an environment, put its single digit code.  Otherwise don't pass it in
+		@DatabaseType		:	If you only want results for a specific DB type.  Otherwise don't pass it in
 		@AuthType			:	What kind of authentication will the DB connections use?
 								Windows = Windows Authentication
 								SQL	= SQL Server Authentication
@@ -31,12 +29,17 @@ BEGIN TRY
 			; THROW 50001, 'Invalid @Domain', 1;
 		END
 
-		IF (@EnvironmentCode IS NOT NULL AND @EnvironmentCode NOT IN ('D', 'T', 'S', 'P'))
+		IF (@EnvironmentCode IS NOT NULL 
+			AND NOT EXISTS (SELECT 1 FROM dbo.View_Environment WHERE [EnvironmentCode] = @EnvironmentCode))
 		BEGIN
 			; THROW 50001, 'Invalid @EnvironmentCode', 1;
 		END
 
-		IF (@DatabaseType IS NOT NULL AND @DatabaseType NOT IN ('A', 'AL', 'B', 'C', 'DBA', 'E', 'GA', 'I', 'R', 'SSISDB', 'V'))
+		IF (@DatabaseType IS NOT NULL
+			AND (NOT EXISTS (SELECT 1 FROM dbo.View_DBConnectionConfigForRedgateMultiScript WHERE DatabaseType = @DatabaseType)
+				OR NOT EXISTS (SELECT 1 FROM dbo.View_RedgateMultiScriptDatabaseGroups WHERE DatabaseType = @DatabaseType)
+				)
+			)
 		BEGIN
 			; THROW 50001, 'Invalid @DatabaseType', 1;
 		END

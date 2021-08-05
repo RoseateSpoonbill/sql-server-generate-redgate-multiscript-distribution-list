@@ -65,12 +65,12 @@ namespace GenerateMultiscriptList.Tests.DbObjectTests.dbo
         // --------------------------------------------------------------------------------------------------------------
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldNotThrow_Exception_Windows
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.SqlOnly, Constants.MultiScript_SqlUserNamesList);
 
         public static XUnitExtension.Matrix5TheoryData<string, string, string, string, string> Parameters_ShouldNotThrow_Exception_SQL
-            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, GenericConstants.Environment_Codes,
-                GenericConstants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
+            = new XUnitExtension.Matrix5TheoryData<string, string, string, string, string>(Constants.MultiScript_DomainList_Valid, Constants.Environment_Codes,
+                Constants.Database_Types, Constants.WindowsOnly, Constants.NullStringOnly);
 
         [Theory]
         [MemberData(nameof(Parameters_ShouldNotThrow_Exception_Windows))]

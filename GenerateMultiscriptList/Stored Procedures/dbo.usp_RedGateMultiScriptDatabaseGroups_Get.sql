@@ -3,10 +3,8 @@ Description	:	Return all RedGate Multiscript's Database Groups for this domain
 
 Parameters
 		@Domain				:	com
-		@EnvironmentCode	:	If you only want results for an environment
-								Valid values: null, D, T, S, P
-		@DatabaseType		:	If you only want results for a specific DB type
-								Valid values: null, A, AL, B, C, D, E, GA, I, R, SSISDB, V
+		@EnvironmentCode	:	If you only want results for an environment, put its single digit code.  Otherwise don't pass it in
+		@DatabaseType		:	If you only want results for a specific DB type.  Otherwise don't pass it in
 		@AuthType			:	What kind of authentication will the DB connections use?
 								Windows = Windows Authentication
 								SQL	= SQL Server Authentication
