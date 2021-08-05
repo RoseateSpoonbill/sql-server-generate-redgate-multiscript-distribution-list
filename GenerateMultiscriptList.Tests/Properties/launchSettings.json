@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "GenerateMultiscriptList.Tests": {
+      "commandName": "Project"
+    }
+  }
+}

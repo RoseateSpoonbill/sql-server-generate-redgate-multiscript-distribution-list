@@ -1,0 +1,7 @@
+// This is a template file. Do not change this for your local environment
+// Copy this file => appsettings.test.json, and modify your local settings there
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=GenerateMultiscriptList;Trusted_Connection=True;"
+  }
+}
