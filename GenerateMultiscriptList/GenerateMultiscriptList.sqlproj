@@ -71,13 +71,8 @@
     <Folder Include="Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Views\dbo.View_DBConnectionConfig.sql" />
-    <Build Include="Views\dbo.View_RedgateMultiScriptDatabaseGroups.sql" />
-    <Build Include="Stored Procedures\dbo.usp_DBConnectionConfig_GetByRedgateMultiscriptFormat.sql" />
-    <Build Include="Stored Procedures\dbo.usp_RedGateMultiScriptDatabaseGroups_Get.sql" />
-    <Build Include="Views\dbo.View_DBConnectionConfigForRedgateMultiScript.sql" />
-    <Build Include="Stored Procedures\dbo.usp_RedGateMultiScriptDatabaseGroups_ErrorChecks.sql" />
-    <Build Include="Views\dbo.View_Environment.sql" />
+    <Build Include="Views\*.sql" />
+    <Build Include="Stored Procedures\*.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac">
